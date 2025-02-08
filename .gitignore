@@ -1,0 +1,21 @@
+# Node modules
+node_modules/
+
+# Archivos de compilación
+/dist/
+/build/
+
+# Archivos temporales generados por IDEs
+.vscode/
+
+# Dependencias de PhaserJS
+/phaser/
+
+# Logs
+*.log
+
+# Archivos de caché
+.cache/
+
+# Archivos de tu entorno
+.env
