@@ -6,12 +6,6 @@ export default class MainScene extends Phaser.Scene {
         super('Main');
     }
 
-    preload() {
-        this.load.image('Background_main', 'assets/Background-main.png');
-        this.load.image('Play', 'assets/Play.png');
-        this.load.audio('Tap', 'assets/Tap.mp3');
-    }
-
     create() {
         const { width, height } = config;
 
@@ -36,8 +30,8 @@ export default class MainScene extends Phaser.Scene {
         buttonPlay.on('pointerout', () => {
             buttonPlay.setScale(0.10);
             this.sound.play('Tap');
-            this.scene.stop('Main')
-            this.scene.start('Select');  // Cambia a la escena del juego
+            this.scene.stop('Main');
+            this.scene.start('Select');
         });
     }
 }
