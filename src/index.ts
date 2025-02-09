@@ -1,9 +1,9 @@
 import 'phaser';
 import config from './config/config';
-import ExampleScene from './scenes/ExampleScene';
+import MainScene from './scenes/MainScene';
 
-if(module.hot) {
-    module.hot.accept(function() {
+if (module.hot) {
+    module.hot.accept(function () {
         location.reload();
     });
 }
@@ -11,8 +11,8 @@ if(module.hot) {
 class Game extends Phaser.Game {
     constructor() {
         super(config);
-        this.scene.add('Example', ExampleScene);
-        this.scene.start('Example');
+        this.scene.add('Main', MainScene);
+        this.scene.start('Main');
     }
 }
 
