@@ -2,6 +2,8 @@ import 'phaser';
 import config from './config/config';
 import MainScene from './scenes/MainScene';
 import PreloadScene from './scenes/PreloadScene';
+import SelectScene from './scenes/SelectScene';
+import GameScene from './scenes/GameScene';
 
 if (module.hot) {
     module.hot.accept(function () {
@@ -14,6 +16,8 @@ class Game extends Phaser.Game {
         super(config);
         this.scene.add('Preload', PreloadScene)
         this.scene.add('Main', MainScene);
+        this.scene.add('Select', SelectScene);
+        this.scene.add('Game', GameScene);
         this.scene.start('Preload');
     }
 }
