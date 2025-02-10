@@ -4,6 +4,7 @@ import MainScene from './scenes/MainScene';
 import PreloadScene from './scenes/PreloadScene';
 import SelectScene from './scenes/SelectScene';
 import GameScene from './scenes/GameScene';
+import WinnerScene from './scenes/WinnerScene';
 
 if (module.hot) {
     module.hot.accept(function () {
@@ -18,6 +19,7 @@ class Game extends Phaser.Game {
         this.scene.add('Main', MainScene);
         this.scene.add('Select', SelectScene);
         this.scene.add('Game', GameScene);
+        this.scene.add('Winner', WinnerScene);
         this.scene.start('Preload');
     }
 }
