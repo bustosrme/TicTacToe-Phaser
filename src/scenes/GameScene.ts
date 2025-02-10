@@ -11,6 +11,8 @@ export default class GameScene extends Phaser.Scene {
     checking: Boolean;
     counter: number;
     currentPlayer: string;
+    timeLeft: number;
+    timeLimit: number;
 
     constructor() {
         super('Game');
@@ -22,6 +24,8 @@ export default class GameScene extends Phaser.Scene {
         this.checking = false;
         this.counter = 0;
         this.currentPlayer = '';
+        this.timeLimit = 10;
+        this.timeLeft = this.timeLimit;
     }
 
     init(data: SceneData) {
@@ -32,6 +36,7 @@ export default class GameScene extends Phaser.Scene {
         ];
         this.counter = 0;
         this.currentPlayer = '';
+        data.buttonPressed = 'X'
         if (!data.buttonPressed) {
             this.scene.stop('Game');
             this.scene.start('Main');
@@ -41,40 +46,67 @@ export default class GameScene extends Phaser.Scene {
 
     create() {
         const { width, height } = config
-        const cellSize = 103
+        const cellSize = 83;
 
-        const background = this.add.image(width / 2, height / 2, 'Background');
+        this.add.image(width / 2, height / 2, 'Background');
+        this.sound.add('Music', { loop: true }).play();
 
-        const title = this.add.text(width / 2, height / 8, 'Turno del jugador', {
-            fontSize: '48px',
-            fontFamily: 'Monserrat',
+        let graphics = this.add.graphics();
+        graphics.fillStyle(0xFFFFFF, 1);
+        graphics.fillRoundedRect(4 * width / 13, height / 10, 140, 50, 25)
+
+        const titleTime = this.add.text(width / 2, height / 7, ``, {
+            font: '500 36px Montserrat',
             color: '#000000',
+        }).setOrigin(0.5);
+
+        const title = this.add.text(width / 2, height / 3, ``, {
+            font: 'Bold 36px Montserrat',
+            color: '#FFFFFF',
             align: 'center',
             wordWrap: { width: width - 100, useAdvancedWrap: true }
         });
-        title.setOrigin(0.5, 0.5);
+        title.setOrigin(0.5, 1);
 
-        let imgCurrentPlayer = this.add.sprite(width / 2, height / 4, `Img${this.currentPlayer}`)
-            .setScale(0.15);
+        const timer = this.time.addEvent({
+            delay: 1000,
+            callback: this.updateTimer,
+            callbackScope: this,
+            loop: true,
+            args: [titleTime, title]
+        });
+
+        let backgroundGraphics = this.add.graphics();
+        backgroundGraphics.fillStyle(0xFFFFFF, 1);
+        backgroundGraphics.fillRoundedRect(width / 8, 7 * height / 15 - 3, cellSize * 3 + 20, cellSize * 3 + 20, 25)
 
         for (let row = 0; row < 3; row++) {
             for (let col = 0; col < 3; col++) {
-                const x = col * cellSize + 76
-                const y = row * cellSize + 360;
+                const x = col * cellSize + 97
+                const y = row * cellSize + 347;
 
                 const cell = this.add.rectangle(x, y, cellSize, cellSize, 0xFFFFFF)
                     .setInteractive()
 
                 cell.on('pointerdown', async () => {
                     await this.handleCellClick(row, col, x, y);
-                    imgCurrentPlayer.setTexture(`Img${this.currentPlayer}`)
                 });
             }
         }
 
-        const board = this.add.image(width / 2, 463, 'Board')
-            .setScale(0.5);
+        const board = this.add.image(width / 2, 430, 'Board')
+            .setScale(0.4);
+    }
 
+    updateTimer(titleTime: Phaser.GameObjects.Text, title: Phaser.GameObjects.Text) {
+        this.timeLeft--;
+        title.setText(`Turno del jugador ${this.currentPlayer}`)
+        titleTime.setText(`0:0${this.timeLeft}`);
+
+        if (this.timeLeft <= 0) {
+            this.timeLeft = this.timeLimit;
+            this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
+        }
     }
 
     handleCellClick(row: number, col: number, x: number, y: number) {
@@ -82,10 +114,11 @@ export default class GameScene extends Phaser.Scene {
             return;
         }
         this.sound.play('Tap')
+        this.timeLeft = this.timeLimit;
         this.board[row][col] = this.currentPlayer;
 
         const img = this.add.image(x, y - 50, `Img${this.currentPlayer}`)
-            .setScale(0.2);
+            .setScale(0.15);
 
         this.tweens.add({
             targets: img,
@@ -131,7 +164,8 @@ export default class GameScene extends Phaser.Scene {
     finishGame(winner: string | null) {
         this.checking = false;
         this.sound.play('Win');
-        
+        this.sound.stopByKey('Music');
+
         this.scene.stop('Game');
         this.scene.start('Winner', { winner });
     }
