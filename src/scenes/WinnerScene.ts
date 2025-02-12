@@ -27,8 +27,19 @@ export default class WinnerScene extends Phaser.Scene {
 
         const background = this.add.image(width / 2, height / 2, 'Background');
 
+        this.add.particles(0, -50, 'Particle', {
+            x: { min: 0, max: width },
+            speed: { min: 50, max: 100 },
+            angle: { min: 0, max: 360 },
+            gravityY: 200,
+            lifespan: 5000,
+            quantity: 2,
+            frequency: 100,
+            scale: { start: 0.1, end: 0 },
+        });
+
         let graphics = this.add.graphics();
-        graphics.fillStyle(0x000000, 0.2);
+        graphics.fillStyle(0xFFFFFF, 1);
 
         let padding = 20;
         let textWidth = width - 100;
