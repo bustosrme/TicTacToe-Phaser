@@ -49,7 +49,7 @@ Este comando generará los archivos optimizados en una carpeta (generalmente dis
 
 Puedes probar el juego en vivo en el siguiente enlace (si está desplegado):
 
-[Prueba el juego aquí](https://tictactoe-mauroebr.pages.dev)
+[Prueba el juego aquí](https://tictactoe-bustosrme.pages.dev/)
 
 ## Diseño
 
