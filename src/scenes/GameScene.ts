@@ -36,7 +36,6 @@ export default class GameScene extends Phaser.Scene {
         ];
         this.counter = 0;
         this.currentPlayer = '';
-        data.buttonPressed = 'X'
         if (!data.buttonPressed) {
             this.scene.stop('Game');
             this.scene.start('Main');
