@@ -16,17 +16,15 @@ export default class WinnerScene extends Phaser.Scene {
     }
 
     init(data: SceneData) {
-        if (data?.winner) {
-            this.title = 'Ganador';
-            this.winner = data.winner;
-        }
+        this.winner = data?.winner ?? null;
+        this.title = this.winner ? 'Ganador' : 'Empate';
     }
 
     create() {
         const { width, height } = config;
 
         // Add background image
-        const background = this.add.image(width / 2, height / 2, 'Background');
+        this.add.image(width / 2, height / 2, 'Background');
 
         // Add particle effects
         this.add.particles(0, -50, 'Particle', {
@@ -53,7 +51,7 @@ export default class WinnerScene extends Phaser.Scene {
 
         const title = this.add.text(width / 2, height / 7, this.title, {
             fontSize: '48px',
-            fontFamily: 'Monserrat',
+            fontFamily: 'Montserrat',
             color: '#000000',
             align: 'center',
         });
@@ -61,7 +59,7 @@ export default class WinnerScene extends Phaser.Scene {
 
         // Add winner image if there's a winner
         if (this.winner) {
-            let imgWinner = this.add.image(width / 2, 2 * height / 7, `Img${this.winner}`)
+            this.add.image(width / 2, 2 * height / 7, `Img${this.winner}`)
                 .setScale(0.15);
         }
 

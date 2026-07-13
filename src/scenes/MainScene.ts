@@ -10,7 +10,7 @@ export default class MainScene extends Phaser.Scene {
         const { width, height } = config;
 
         // Add the background image to the center of the scene
-        const background = this.add.image(width / 2, height / 2, 'Background_main');
+        this.add.image(width / 2, height / 2, 'Background_main');
 
         // Create a background for the play button
         const backgroundButton = this.add.graphics();
@@ -24,7 +24,7 @@ export default class MainScene extends Phaser.Scene {
         // Add the title text to the scene
         const title = this.add.text(width / 2, height / 3, 'TIC-TAC-TOE', {
             fontSize: '48px',
-            fontFamily: 'Monserrat',
+            fontFamily: 'Montserrat',
             color: '#ffffff',
             padding: { x: 20, y: 10 }
         });
