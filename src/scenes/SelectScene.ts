@@ -9,7 +9,7 @@ export default class SelectScene extends Phaser.Scene {
     create() {
         const { width, height } = config;
 
-        const background = this.add.image(width / 2, height / 2, 'Background'); // Add background image
+        this.add.image(width / 2, height / 2, 'Background'); // Add background image
 
         let padding = 20;
         let textWidth = width - 100;
@@ -32,7 +32,7 @@ export default class SelectScene extends Phaser.Scene {
 
         const title = this.add.text(width / 2, height / 4, '¿Quién juega primero?', {
             fontSize: '48px',
-            fontFamily: 'Monserrat',
+            fontFamily: 'Montserrat',
             color: '#000000',
             align: 'center',
             wordWrap: { width: textWidth, useAdvancedWrap: true }
